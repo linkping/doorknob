@@ -25,6 +25,11 @@ const int SERVO_PIN = 6;
 const int GREEN_LED_PIN = 7;
 
 /**
+ * Pin for the red LED.
+ */
+const int RED_LED_PIN = 8;
+
+/**
  * Angle when the servo is in opened state.
  */
 const int OPEN_ANGLE = 120;
@@ -66,9 +71,10 @@ static void blinkGreenLED() {
 }
 
 /**
- * Opens the door and blinks the LED.
+ * Opens the door, turns off the red LED and blinks the green LED.
  */
 static void openDoor() {
+  digitalWrite(RED_LED_PIN, LOW);
   servo.write(OPEN_ANGLE);
   blinkGreenLED();
 }
@@ -80,6 +86,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(BUTTON_PIN, INPUT);
   pinMode(GREEN_LED_PIN, OUTPUT);
+  pinMode(RED_LED_PIN, OUTPUT);
   servo.attach(SERVO_PIN);
 }
 
@@ -95,6 +102,7 @@ void loop() {
     openDoor();
   } else {
     servo.write(CLOSE_ANGLE);
+    digitalWrite(RED_LED_PIN, HIGH);
     delay(20);
   }
 }

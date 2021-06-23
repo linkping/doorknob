@@ -27,12 +27,12 @@ const int OPEN_DELAY = 2000;
 /**
  * Angle when the servo is in opened state.
  */
-const int OPENED_ANGLE = 120;
+const int OPEN_ANGLE = 120;
 
 /**
  * Angle when the servo is in closed state.
  */
-const int CLOSED_ANGLE = 0;
+const int CLOSE_ANGLE = 0;
 
 /**
  * Set up serial, push button and attach the servo.
@@ -44,15 +44,41 @@ void setup() {
 }
 
 /**
- * Check button state, read from serial and open/close the servo.
+ * Returns true if the button is pressed, otherwise false.
+ */
+static bool isButtonPressed() {
+  return digitalRead(BUTTON_PIN) == HIGH;
+}
+
+/**
+ * Returns true if there's a 1 read on serial.
+ */
+static bool isSerialOne() {
+  while (Serial.available() > 0) {
+    if (Serial.parseInt() == 1) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Checks whether the door should be opened or not.
+ */
+static bool shouldOpenDoor() {
+  return isButtonPressed() || isSerialOne();
+}
+
+/**
+ *
  */
 void loop() {
-  if (digitalRead(BUTTON_PIN) == HIGH) {
-    Serial.println("Button DOWN");
-    servo.write(OPENED_ANGLE);
+  if (shouldOpenDoor()) {
+    Serial.println("Opening door!");
+    servo.write(OPEN_ANGLE);
     delay(OPEN_DELAY);
   } else {
-    servo.write(CLOSED_ANGLE);
+    servo.write(CLOSE_ANGLE);
     delay(20);
   }
 }

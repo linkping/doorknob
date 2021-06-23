@@ -20,9 +20,9 @@ const int BUTTON_PIN = A0;
 const int SERVO_PIN = 6;
 
 /**
- * Time in ms to keep the servo in the opened state.
+ * Pin for the green LED.
  */
-const int OPEN_DELAY = 2000;
+const int GREEN_LED_PIN = 7;
 
 /**
  * Angle when the servo is in opened state.
@@ -54,19 +54,32 @@ static bool isSerialOne() {
 }
 
 /**
- * Opens the door.
+ * Blinks the green LED.
  */
-static void openDoor() {
-  servo.write(OPEN_ANGLE);
-  delay(OPEN_DELAY);
+static void blinkGreenLED() {
+  for (int i = 0; i < 10; ++i) {
+    digitalWrite(GREEN_LED_PIN, HIGH);
+    delay(100);
+    digitalWrite(GREEN_LED_PIN, LOW);
+    delay(100);
+  }
 }
 
 /**
- * Set up serial, push button and attach the servo.
+ * Opens the door and blinks the LED.
+ */
+static void openDoor() {
+  servo.write(OPEN_ANGLE);
+  blinkGreenLED();
+}
+
+/**
+ * Set up serial, push button, LEDs and attach the servo.
  */
 void setup() {
   Serial.begin(9600);
   pinMode(BUTTON_PIN, INPUT);
+  pinMode(GREEN_LED_PIN, OUTPUT);
   servo.attach(SERVO_PIN);
 }
 

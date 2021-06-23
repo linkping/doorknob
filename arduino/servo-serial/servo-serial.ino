@@ -35,15 +35,6 @@ const int OPEN_ANGLE = 120;
 const int CLOSE_ANGLE = 0;
 
 /**
- * Set up serial, push button and attach the servo.
- */
-void setup() {
-  Serial.begin(9600);
-  pinMode(BUTTON_PIN, INPUT);
-  servo.attach(SERVO_PIN);
-}
-
-/**
  * Returns true if the button is pressed, otherwise false.
  */
 static bool isButtonPressed() {
@@ -67,6 +58,15 @@ static bool isSerialOne() {
  */
 static bool shouldOpenDoor() {
   return isButtonPressed() || isSerialOne();
+}
+
+/**
+ * Set up serial, push button and attach the servo.
+ */
+void setup() {
+  Serial.begin(9600);
+  pinMode(BUTTON_PIN, INPUT);
+  servo.attach(SERVO_PIN);
 }
 
 /**

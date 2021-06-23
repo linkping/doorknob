@@ -54,10 +54,11 @@ static bool isSerialOne() {
 }
 
 /**
- * Checks whether the door should be opened or not.
+ * Opens the door.
  */
-static bool shouldOpenDoor() {
-  return isButtonPressed() || isSerialOne();
+static void openDoor() {
+  servo.write(OPEN_ANGLE);
+  delay(OPEN_DELAY);
 }
 
 /**
@@ -73,10 +74,12 @@ void setup() {
  *
  */
 void loop() {
-  if (shouldOpenDoor()) {
-    Serial.println("Opening door!");
-    servo.write(OPEN_ANGLE);
-    delay(OPEN_DELAY);
+  if (isButtonPressed()) {
+    Serial.println("Opening door using button!");
+    openDoor();
+  } else if (isSerialOne()) {
+    Serial.println("Opening door using serial!");
+    openDoor();
   } else {
     servo.write(CLOSE_ANGLE);
     delay(20);

@@ -15,11 +15,6 @@ Servo servo;
 const int BUTTON_PIN = A0;
 
 /**
- * Pin for the servo motor.
- */
-const int SERVO_PIN = 6;
-
-/**
  * Pin for the green LED.
  */
 const int GREEN_LED_PIN = 7;
@@ -28,6 +23,11 @@ const int GREEN_LED_PIN = 7;
  * Pin for the red LED.
  */
 const int RED_LED_PIN = 8;
+
+/**
+ * Pin for the servo motor.
+ */
+const int SERVO_PIN = 9;
 
 /**
  * Angle when the servo is in opened state.
